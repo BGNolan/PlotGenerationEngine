@@ -1,0 +1,37 @@
+Uses preconditions inconjunction with t7_pyhop
+
+Big picture
+User: creates a boolean equation, adds that equation to a Precondition obj
+User: creates a task (pyhop), adds (taskName, task) to pyhop, adds (taskName, preconditionName) to preconditions
+When t7_pyhop.pyhop is called: before a task is run the preconditions are checked, if true then task is run
+
+Details
+What happens when a precondtion fails
+	When a precondition fails in t7_pyhop an addition is made to faillog
+NOTE: if you want more to happen, you can add a call to another method in preconditions.addToFailLog method
+
+How to uses this (validator)
+	When a pyhop method fails, and it has preconditions, the fail log is updated with that preconditions failmessage
+	You can see a pyhop task's precondtions by using its name as key in preconditionsForTasks dic in preconditions
+
+How does a user create a precondition
+V1
+First they must make a string wich is a (python) boolean equation
+Second they must make an array of strings (each item in array is the name of varables used in the equation)
+Third they must create a name
+Forth they must create an error message
+Then they must add theses values to their respective values in a precondition obj
+Then they must uses addPrecondtion to add precondition to list of preconditions
+They they must uses addPreconditionToTask passing the name of a pyhop method and name of precondition
+NOTE: that the parameters passed to pyhop for the task are also passed to precondtion when executed
+NOTE: that a pyhop method can have multiple preconditions, and each can have there own fail message
+
+V2
+First make a method that returns a bool value
+Second they must create a name for precondition
+Third they must create an error message
+Then they must add theses values to their respective values in a precondition obj
+Then they must uses addPrecondtion to add precondition to list of preconditions
+They they must uses addPreconditionToTask passing the name of a pyhop method and name of precondition
+NOTE: that the parameters passed to pyhop for the method are also passed to precondtion when executed
+NOTE: that the number of parameters used in pyhop method must equal preconditions
