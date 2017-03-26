@@ -5,7 +5,9 @@ This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 from __future__ import print_function
-
+from pyhop_module.blocks_world_operators import *
+from pyhop_module.blocks_world_methods import *
+from pyhop_module.blocks_world_methods2 import *
 from pyhop_module.pyhop import *
 
 print('')

@@ -1,4 +1,8 @@
-"""
+﻿"""
+Changes made by Team 7
+Assossiated with WSU
+Edited by Calvin McClory 3/21/2017
+
 Pyhop, version 1.2.2 -- a simple SHOP-like planner written in Python.
 Author: Dana S. Nau, 2013.05.31
 
@@ -97,6 +101,7 @@ Pyhop provides the following classes and functions:
 
 from __future__ import print_function
 import copy,sys, pprint
+import preconditions
 
 ############################################################
 # States and goals
@@ -188,9 +193,6 @@ def print_methods(mlist=methods):
     for task in mlist:
         print('{:<14}'.format(task) + ', '.join([f.__name__ for f in mlist[task]]))
 
-def get_operators(olist=operators):
-    return olist
-
 ############################################################
 # The actual planner
 
@@ -230,14 +232,19 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     if task1[0] in methods:
         if verbose>2: print('depth {} method instance {}'.format(depth,task1))
         relevant = methods[task1[0]]
-        for method in relevant:
-            subtasks = method(state,*task1[1:])
-            # Can't just say "if subtasks:", because that's wrong if subtasks == []
-            if verbose>2:
-                print('depth {} new tasks: {}'.format(depth,subtasks))
-            if subtasks != False:
-                solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
-                if solution != False:
-                    return solution
+        preconditionOut = preconditions.runPreconditions(state,task1[0],task1[1:])
+        if( preconditionOut == True ):
+           
+            for method in relevant:
+                subtasks = method(state,*task1[1:])
+                # Can't just say "if subtasks:", because that's wrong if subtasks == []
+                if verbose>2:
+                    print('depth {} new tasks: {}'.format(depth,subtasks))
+                if subtasks != False:
+                    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
+                    if solution != False:
+                        return solution
+        else:
+            preconditions.addFailure(preconditionOut,depth) 
     if verbose>2: print('depth {} returns failure'.format(depth))
     return False
