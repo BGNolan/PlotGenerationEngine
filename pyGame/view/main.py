@@ -22,19 +22,6 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.pushButton_3.clicked.connect(self.showStateBrowser)
         self.pushButton.clicked.connect( lambda: self.showTaskWindow(task) )
 
-    #                "parameters":
-    #                    {
-    #                    "0": "parameter0",
-    #                    "1": "parameter1",
-    #                    "2": "parameter2"
-    #                    },
-    #                 "preconditions":
-    #                    {
-    #                    "0": {"message": "message0", "isMet": "false"},
-    #                    "1": {"message": "message1", "isMet": "true"}
-    #                    }
-    #                }
-
     def browseFolder(self):
         #self.listWidget.clear()
         file_name = str(QtWidgets.QFileDialog.getOpenFileName(self)[0])
