@@ -1,11 +1,18 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 import sys
 
-import mainwindow
-import statebrowserwindow
-import taskwindow
+import blocks_world_operators
+from pyhop_module.blocks_world_methods import *
+from pyhop_module.blocks_world_methods2 import *
+from pyhop_module.pyhop import *
+
+import view.mainwindow as mainwindow
+import view.statebrowserwindow as statebrowserwindow
+import view.taskwindow as taskwindow
 
 import os
+
+print_operators()
 
 class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, parent=None):
@@ -47,17 +54,17 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.taskWindow.show()
 
     def populateTasks(self, tasks):
+        tasks = get_operators()
         layout = QtWidgets.QGridLayout(self.tasksList)
         row = 0
         col = 0
-        for taskName in ["0","1","2","3","4","5", "6", "7"]:
+        for taskName in tasks:
                 layout.addWidget(QtWidgets.QPushButton(taskName),row,col)
                 if col < 2:
                     col += 1
                 else:
                     col = 0
                     row += 1
-
         self.scrollAreaWidgetContents.setLayout(layout)
 
 
