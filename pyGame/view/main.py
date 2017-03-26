@@ -21,6 +21,7 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.pushButton_2.clicked.connect(self.showStateBrowser)
         self.pushButton_3.clicked.connect(self.showStateBrowser)
         self.pushButton.clicked.connect( lambda: self.showTaskWindow(task) )
+        self.populateTasks(task)
 
     def browseFolder(self):
         #self.listWidget.clear()
@@ -44,6 +45,21 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
             self.taskWindow = taskwindow.TaskWindow(self)
         self.taskWindow.task = task
         self.taskWindow.show()
+
+    def populateTasks(self, tasks):
+        layout = QtWidgets.QGridLayout(self.tasksList)
+        row = 0
+        col = 0
+        for taskName in ["0","1","2","3","4","5", "6", "7"]:
+                layout.addWidget(QtWidgets.QPushButton(taskName),row,col)
+                if col < 2:
+                    col += 1
+                else:
+                    col = 0
+                    row += 1
+
+        self.scrollAreaWidgetContents.setLayout(layout)
+
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
