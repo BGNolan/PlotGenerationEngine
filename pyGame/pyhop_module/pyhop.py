@@ -157,6 +157,7 @@ def find_if(cond,seq):
 
 operators = {}
 methods = {}
+states_list = [] # This will store intermediate and final states, cleared and refilled with each call of pyhop()
 
 def declare_operators(*op_list):
     """
@@ -192,6 +193,9 @@ def get_operators(olist=operators):
     task = olist
     return task.keys()
 
+def get_states_list():
+    return states_list
+
 ############################################################
 # The actual planner
 
@@ -200,6 +204,8 @@ def pyhop(state,tasks,verbose=0):
     Try to find a plan that accomplishes tasks in state.
     If successful, return the plan. Otherwise return False.
     """
+    states_list = [] # Clear states list form previous run
+    states_list.append(state)
     if verbose>0: print('** pyhop, verbose={}: **\n   state = {}\n   tasks = {}'.format(verbose, state.__name__, tasks))
     result = seek_plan(state,tasks,[],0,verbose)
     if verbose>0: print('** result =',result,'\n')
@@ -221,6 +227,7 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
         if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
         newstate = operator(copy.deepcopy(state),*task1[1:])
+        states_list.append(newstate)
         if verbose>2:
             print('depth {} new state:'.format(depth))
             print_state(newstate)
