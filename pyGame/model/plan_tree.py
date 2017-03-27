@@ -89,7 +89,7 @@ class Plan_Tree():
 
     def display_all(self):
         nodes_printed =0
-        print("Display Muther Fuckin Tree!!")
+    #    print("Display Muther Fuckin Tree!!")
         #Print the root node
         print ("ROOT NODE: " + ', ' .join(self.__root.task) + " Count: " + str(self.__root.__count))
         nodes_printed +=1
@@ -130,12 +130,3 @@ class Plan_Tree():
                 plan = self.get_parent_task(node.__parent,plan)
             plan.append(node.task)
         return plan
-
-
-
-
-
-
-
-
-

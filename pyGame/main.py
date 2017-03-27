@@ -5,6 +5,7 @@ import blocks_world_operators
 from pyhop_module.blocks_world_methods import *
 from pyhop_module.blocks_world_methods2 import *
 from preconditions_module.t7_pyhop_v1 import *
+from model.plan_tree import *
 
 import view.mainwindow as mainwindow
 import view.statebrowserwindow as statebrowserwindow
@@ -67,6 +68,34 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
 
 def main():
+    #Inital State
+    state1 = State('state1')
+    state1.pos={'a':'b', 'b':'table', 'c':'table'}
+    state1.clear={'c':True, 'b':False,'a':True}
+    state1.holding=False
+
+    #Goal State
+    goal_state = Goal('goal1a')
+    goal_state.pos={'c':'b', 'b':'a', 'a':'table'}
+    goal_state.clear={'c':True, 'b':False, 'a':False}
+    goal_state.holding=False
+
+    # [('unstack', 'a', 'b'), ('putdown', 'a'), ('pickup', 'b'), ('stack', 'b', 'a'), ('pickup', 'c'), ('stack', 'c', 'b')]
+    #['unstack', 'pickup', 'putdown', 'stack']
+    #Plan
+
+    test_tree = Plan_Tree()
+    test_tree.add_task(('unstack', 'a', 'b'))
+    test_tree.add_task(('putdown', 'a'),test_tree.root)
+    test_tree.add_task(('pickup', 'b'),test_tree.root)
+    test_tree.add_task(('stack', 'b', 'a'),test_tree.nodes[2])
+    test_tree.display_all()
+
+    node = test_tree.get_node(4)
+    plan = test_tree.get_plan(node)
+    for task in plan:
+        print('Task: '+ ', '.join(task))
+
     app = QtWidgets.QApplication(sys.argv)
     form = PlotGenerationEngine()
     form.show()
