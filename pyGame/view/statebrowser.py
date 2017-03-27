@@ -42,7 +42,7 @@ class Ui_StateBrowser(object):
 
     def retranslateUi(self, StateBrowser):
         _translate = QtCore.QCoreApplication.translate
-        StateBrowser.setWindowTitle(_translate("StateBrowser", "Dialog"))
+        StateBrowser.setWindowTitle(_translate("StateBrowser", "State Browser"))
         __sortingEnabled = self.listWidget.isSortingEnabled()
         self.listWidget.setSortingEnabled(False)
         item = self.listWidget.item(0)
@@ -54,4 +54,3 @@ class Ui_StateBrowser(object):
         self.listWidget.setSortingEnabled(__sortingEnabled)
         self.label.setText(_translate("StateBrowser", "Initial State"))
         self.label_3.setText(_translate("StateBrowser", "-> Task A"))
-

@@ -161,7 +161,7 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
         self.pushButton.setText(_translate("MainWindow", "Task A"))
-        self.pushButton_2.setText(_translate("MainWindow", "InitialState"))
+        self.pushButton_2.setText(_translate("MainWindow", "Initial State"))
         self.pushButton_3.setText(_translate("MainWindow", "Goal State"))
         self.worldItemsLabel.setText(_translate("MainWindow", "World Items"))
         self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Blocks"))
@@ -187,4 +187,3 @@ class Ui_MainWindow(object):
         self.actionQuit.setText(_translate("MainWindow", "Quit"))
         self.actionState_Browser.setText(_translate("MainWindow", "State Browser"))
         self.actionPlanner.setText(_translate("MainWindow", "Planner"))
-

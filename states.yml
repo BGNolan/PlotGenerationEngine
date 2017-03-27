@@ -1,0 +1,36 @@
+---
+InitialState
+- Positions
+  - A
+    - B
+  - B
+    - Table
+  - C
+    - Table
+- ClearStatus
+  - A
+    - True
+  - B
+    - False
+  - C
+    - True
+- Holding
+  - False
+GoalState
+- Positions
+  - A
+    - Table
+  - B
+    - A
+  - C
+    - B
+- ClearStatus
+  - A
+    - False
+  - B
+    - False
+  - C
+    - True
+- Holding
+  - False
+...
