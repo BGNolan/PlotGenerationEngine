@@ -1,15 +1,15 @@
 #This file is used for testing the functionality of the model
 from __future__ import print_function
-from pyhop_module.blocks_world_operators import *
-from pyhop_module.blocks_world_methods import *
-from pyhop_module.blocks_world_methods2 import *
-from pyhop_module.pyhop import *
+from model.plan_tree import *
 from validation_module.validator import *
-from plan_tree import *
+import blocks_world_operators
+import blocks_world_methods
+import blocks_world_methods2
+from pyhop_module.pyhop import *
 
 #
 print('')
-#print_operators()
+print_operators()
 
 print('')
 #print_methods()
@@ -36,3 +36,9 @@ test_tree.add_task(('putdown', 'a'),test_tree.root)
 test_tree.add_task(('pickup', 'b'),test_tree.root)
 test_tree.add_task(('stack', 'b', 'a'),test_tree.nodes[2])
 test_tree.display_all()
+print('HMM!')
+
+node = test_tree.get_node(4)
+plan = test_tree.get_plan(node)
+for task in plan:
+    print('Task: '+ ', '.join(task))
