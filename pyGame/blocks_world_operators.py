@@ -5,7 +5,9 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-import pyhop_module.pyhop as pyhop
+#import pyhop_module.pyhop as pyhop
+import preconditions_module.t7_pyhop_v1 as pyhop
+import preconditions_v2 as preconditions
 
 """Each Pyhop planning operator is a Python function. The 1st argument is
 the current state, and the others are the planning operator's usual arguments.
@@ -19,9 +21,14 @@ The blocks-world operators use three state variables:
 - clear[b] = False if a block is on b or the hand is holding b, else True.
 - holding = name of the block being held, or False if the hand is empty.
 """
+def condition0(state, position):
+    return state.pos[position] == 'table'
 
 def pickup(state,b):
-    if state.pos[b] == 'table' and state.clear[b] == True and state.holding == False:
+    condition0 = state.pos[b] == 'table'
+#    condition1 = state.clear[b] == True
+#    condition2 = state.holding == False
+    if condition0:# and condition1 and condition2:
         state.pos[b] = 'hand'
         state.clear[b] = False
         state.holding = b
@@ -54,9 +61,18 @@ def stack(state,b,c):
         return state
     else: return False
 
+
+
+isOnTable = preconditions.Precondition()
+isOnTable.conditionName = 'on table'
+isOnTable.conditionFunction = condition0
+isOnTable.failMessage = 'object picked up was not on the table'
+preconditions.addToPreconditions(isOnTable)
+
 """
 Below, 'declare_operators(pickup, unstack, putdown, stack)' tells Pyhop
 what the operators are. Note that the operator names are *not* quoted.
 """
 
 pyhop.declare_operators(pickup, unstack, putdown, stack)
+preconditions.addPreconditionsToTask('pickup',['on table'])

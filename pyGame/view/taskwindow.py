@@ -1,6 +1,8 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 import sys
 
+import preconditions_v2 as pc
+
 import mainwindow
 import dialog
 
@@ -14,13 +16,15 @@ class TaskWindow(QtWidgets.QMainWindow, dialog.Ui_Dialog):
     def task(self, value):
         self._task = value
         self.listWidget.clear()
-        self.label.setText(value["Task"]["Name"])
-        self.listWidget.addItem("- Parameters:")
+        self.label.setText(value)
+        #self.listWidget.addItem("- Parameters:")
         self.listWidget_2.addItem("- Preconditions:")
-        for key in value["Task"]["Parameters"]:
-            self.listWidget.addItem(key + ": " + value["Task"]["Parameters"][key])
-        for key in value["Task"]["Preconditions"]:
-            self.listWidget_2.addItem(key + ": " + value["Task"]["Preconditions"][key])
+
+        self.listWidget_2.addItem(pc.preconditionsForTasks[value][0])
+        #for key in value["Task"]["Parameters"]:
+        #    self.listWidget.addItem(key + ": " + value["Task"]["Parameters"][key])
+        #for key in value["Task"]["Preconditions"]:
+        #    self.listWidget_2.addItem(key + ": " + value["Task"]["Preconditions"][key])
 
 
     def __init__(self, parent=None):

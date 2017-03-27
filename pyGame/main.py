@@ -12,8 +12,6 @@ import view.taskwindow as taskwindow
 
 import os
 
-print_operators()
-
 class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, parent=None):
         super(PlotGenerationEngine, self).__init__(parent)
@@ -21,14 +19,13 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
         self.stateBrowserWindow = None
         self.taskWindow = None
-        task = {'Task': {'Name': "Task A", 'Parameters': {"Param0": "A", "Param1": "B"}, "Preconditions": {"Precondition0": "P0", "Precondition1": "P1"} }}
         self.actionOpen.triggered.connect(self.browseFolder)
         self.actionState_Browser.triggered.connect(self.showStateBrowser)
         self.actionPlanner.triggered.connect(self.hideStateBrowser)
         self.pushButton_2.clicked.connect(self.showStateBrowser)
         self.pushButton_3.clicked.connect(self.showStateBrowser)
-        self.pushButton.clicked.connect( lambda: self.showTaskWindow(task) )
-        self.populateTasks(task)
+        self.pushButton.clicked.connect( lambda: self.showTaskWindow('pickup') )
+        self.populateTasks()
 
     def browseFolder(self):
         #self.listWidget.clear()
@@ -50,10 +47,11 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def showTaskWindow(self, task):
         if self.taskWindow is None:
             self.taskWindow = taskwindow.TaskWindow(self)
+
         self.taskWindow.task = task
         self.taskWindow.show()
 
-    def populateTasks(self, tasks):
+    def populateTasks(self):
         tasks = get_operators()
         layout = QtWidgets.QGridLayout(self.tasksList)
         row = 0

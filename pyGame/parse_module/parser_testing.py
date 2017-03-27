@@ -15,6 +15,7 @@ print_methods()
 
 # Initial State
 state1 = State('state1')
+state1.blocks = {"a" : "a", "b" : "b", "c" : "c"}
 state1.pos={'a':'b', 'b':'table', 'c':'table'}
 state1.clear={'c':True, 'b':False,'a':True}
 state1.holding=False
