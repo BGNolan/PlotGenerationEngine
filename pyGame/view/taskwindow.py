@@ -17,14 +17,9 @@ class TaskWindow(QtWidgets.QMainWindow, dialog.Ui_Dialog):
         self._task = value
         self.listWidget.clear()
         self.label.setText(value)
-        #self.listWidget.addItem("- Parameters:")
         self.listWidget_2.addItem("- Preconditions:")
-
-        self.listWidget_2.addItem(pc.preconditionsForTasks[value][0])
-        #for key in value["Task"]["Parameters"]:
-        #    self.listWidget.addItem(key + ": " + value["Task"]["Parameters"][key])
-        #for key in value["Task"]["Preconditions"]:
-        #    self.listWidget_2.addItem(key + ": " + value["Task"]["Preconditions"][key])
+        for precondition in pc.preconditionsForTasks[value]:
+            self.listWidget_2.addItem(precondition)
 
 
     def __init__(self, parent=None):
