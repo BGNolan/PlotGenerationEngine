@@ -6,6 +6,7 @@ from pyhop_module.blocks_world_methods2 import *
 from pyhop_module.pyhop import *
 from validation_module.validator import *
 from plan_tree import *
+
 #
 print('')
 #print_operators()
