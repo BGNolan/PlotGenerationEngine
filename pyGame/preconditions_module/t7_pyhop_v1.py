@@ -1,4 +1,8 @@
-"""
+﻿"""
+Changes made by Team 7
+Assossiated with WSU
+Edited by Calvin McClory 3/21/2017
+
 Pyhop, version 1.2.2 -- a simple SHOP-like planner written in Python.
 Author: Dana S. Nau, 2013.05.31
 
@@ -15,7 +19,7 @@ Copyright 2013 Dana S. Nau - http://www.cs.umd.edu/~nau
    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
    See the License for the specific language governing permissions and
    limitations under the License.
-
+   
 Pyhop should work correctly in both Python 2.7 and Python 3.2.
 For examples of how to use it, see the example files that come with Pyhop.
 
@@ -60,20 +64,20 @@ Pyhop provides the following classes and functions:
 # Pyhop's planning algorithm is very similar to the one in SHOP and JSHOP
 # (see http://www.cs.umd.edu/projects/shop). Like SHOP and JSHOP, Pyhop uses
 # HTN methods to decompose tasks into smaller and smaller subtasks, until it
-# finds tasks that correspond directly to actions. But Pyhop differs from
+# finds tasks that correspond directly to actions. But Pyhop differs from 
 # SHOP and JSHOP in several ways that should make it easier to use Pyhop
 # as part of other programs:
-#
+# 
 # (1) In Pyhop, one writes methods and operators as ordinary Python functions
 #     (rather than using a special-purpose language, as in SHOP and JSHOP).
-#
+# 
 # (2) Instead of representing states as collections of logical assertions,
 #     Pyhop uses state-variable representation: a state is a Python object
 #     that contains variable bindings. For example, to define a state in
 #     which box b is located in room r1, you might write something like this:
 #     s = State()
 #     s.loc['b'] = 'r1'
-#
+# 
 # (3) You also can define goals as Python objects. For example, to specify
 #     that a goal of having box b in room r2, you might write this:
 #     g = Goal()
@@ -83,13 +87,13 @@ Pyhop provides the following classes and functions:
 #     your methods and operators, and passing g to them as an argument.
 #     In the same fashion, you could tell Pyhop to achieve any one of
 #     several different goals, or to achieve them in some desired sequence.
-#
+# 
 # (4) Unlike SHOP and JSHOP, Pyhop doesn't include a Horn-clause inference
 #     engine for evaluating preconditions of operators and methods. So far,
 #     I've seen no need for it; I've found it easier to write precondition
 #     evaluations directly in Python. But I could consider adding such a
 #     feature if someone convinces me that it's really necessary.
-#
+# 
 # Accompanying this file are several files that give examples of how to use
 # Pyhop. To run them, launch python and type "import blocks_world_examples"
 # or "import simple_travel_example".
@@ -97,6 +101,7 @@ Pyhop provides the following classes and functions:
 
 from __future__ import print_function
 import copy,sys, pprint
+import preconditions
 
 ############################################################
 # States and goals
@@ -157,11 +162,10 @@ def find_if(cond,seq):
 
 operators = {}
 methods = {}
-states_list = [] # This will store intermediate and final states, cleared and refilled with each call of pyhop()
 
 def declare_operators(*op_list):
     """
-    Call this after defining the operators, to tell Pyhop what they are.
+    Call this after defining the operators, to tell Pyhop what they are. 
     op_list must be a list of functions, not strings.
     """
     operators.update({op.__name__:op for op in op_list})
@@ -189,22 +193,14 @@ def print_methods(mlist=methods):
     for task in mlist:
         print('{:<14}'.format(task) + ', '.join([f.__name__ for f in mlist[task]]))
 
-def get_operators(olist=operators):
-    task = olist
-    return task.keys()
-
-def get_states_list():
-    return states_list
 ############################################################
 # The actual planner
 
 def pyhop(state,tasks,verbose=0):
     """
-    Try to find a plan that accomplishes tasks in state.
+    Try to find a plan that accomplishes tasks in state. 
     If successful, return the plan. Otherwise return False.
     """
-    states_list = [] # Clear states list form previous run
-    states_list.append(state)
     if verbose>0: print('** pyhop, verbose={}: **\n   state = {}\n   tasks = {}'.format(verbose, state.__name__, tasks))
     result = seek_plan(state,tasks,[],0,verbose)
     if verbose>0: print('** result =',result,'\n')
@@ -226,7 +222,6 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
         if verbose>2: print('depth {} action {}'.format(depth,task1))
         operator = operators[task1[0]]
         newstate = operator(copy.deepcopy(state),*task1[1:])
-        states_list.append(newstate)
         if verbose>2:
             print('depth {} new state:'.format(depth))
             print_state(newstate)
@@ -237,14 +232,19 @@ def seek_plan(state,tasks,plan,depth,verbose=0):
     if task1[0] in methods:
         if verbose>2: print('depth {} method instance {}'.format(depth,task1))
         relevant = methods[task1[0]]
-        for method in relevant:
-            subtasks = method(state,*task1[1:])
-            # Can't just say "if subtasks:", because that's wrong if subtasks == []
-            if verbose>2:
-                print('depth {} new tasks: {}'.format(depth,subtasks))
-            if subtasks != False:
-                solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
-                if solution != False:
-                    return solution
+        preconditionOut = preconditions.runPreconditions(state,task1[0],task1[1:])
+        if( preconditionOut == True ):
+           
+            for method in relevant:
+                subtasks = method(state,*task1[1:])
+                # Can't just say "if subtasks:", because that's wrong if subtasks == []
+                if verbose>2:
+                    print('depth {} new tasks: {}'.format(depth,subtasks))
+                if subtasks != False:
+                    solution = seek_plan(state,subtasks+tasks[1:],plan,depth+1,verbose)
+                    if solution != False:
+                        return solution
+        else:
+            preconditions.addFailure(preconditionOut,depth) 
     if verbose>2: print('depth {} returns failure'.format(depth))
     return False

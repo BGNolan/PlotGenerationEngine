@@ -39,4 +39,25 @@ class Validator:
     def get_tasks(self):
         """Returns a list of operators"""
         tasks = get_operators()
-        return tasks.keys()
+        return tasks
+
+    def get_states_list(self):
+        """Returns a list of intermediate states and end state after
+        NOTE: run_pyhop method should be called first
+        """
+        sl = get_states_list()
+        return sl
+
+    def get_pre_state(self):
+        """Returns the state prior to execution of the last task
+        NOTE: run_pyhop method should be called first
+        """
+        sl = get_states_list()
+        return sl[len(sl)-2]
+
+    def get_post_state(self):
+        """Returns the state after execution of the last task
+        NOTE: run_pyhop method should be called first
+        """
+        sl = get_states_list()
+        return sl[len(sl)-1]

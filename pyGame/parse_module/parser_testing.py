@@ -1,8 +1,8 @@
 
 from __future__ import print_function
-from pyhop_module.blocks_world_operators import *
-from pyhop_module.blocks_world_methods import *
-from pyhop_module.blocks_world_methods2 import *
+from model.blocks_world_operators import *
+from model.blocks_world_methods import *
+from model.blocks_world_methods2 import *
 from pyhop_module.pyhop import *
 from validation_module.validator import *
 from parse_module.parser import *
@@ -20,7 +20,7 @@ state1.clear={'c':True, 'b':False,'a':True}
 state1.holding=False
 
 # Goal State
-goal_state = Goal('goal1a')                     # Is this supposed to be a state instead of a goal object?
+goal_state = Goal('goal1a')
 goal_state.pos = {'c': 'b', 'b': 'a', 'a': 'table'}
 goal_state.clear = {'c': True, 'b': False, 'a': False}
 goal_state.holding = False
