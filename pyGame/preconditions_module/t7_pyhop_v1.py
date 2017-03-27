@@ -193,6 +193,10 @@ def print_methods(mlist=methods):
     for task in mlist:
         print('{:<14}'.format(task) + ', '.join([f.__name__ for f in mlist[task]]))
 
+def get_operators(olist=operators):
+    task = olist
+    return task.keys()
+
 ############################################################
 # The actual planner
 

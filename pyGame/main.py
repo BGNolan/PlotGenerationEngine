@@ -4,7 +4,7 @@ import sys
 import blocks_world_operators
 from pyhop_module.blocks_world_methods import *
 from pyhop_module.blocks_world_methods2 import *
-from pyhop_module.pyhop import *
+from preconditions_module.t7_pyhop_v1 import *
 
 import view.mainwindow as mainwindow
 import view.statebrowserwindow as statebrowserwindow
