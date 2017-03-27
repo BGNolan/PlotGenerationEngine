@@ -1,4 +1,4 @@
-from PyQt5 import QtGui, QtCore, QtWidgets
+from PyQt5 import QtCore, QtWidgets
 import sys
 
 import blocks_world_operators
@@ -6,11 +6,13 @@ from pyhop_module.blocks_world_methods import *
 from pyhop_module.blocks_world_methods2 import *
 from pyhop_module.pyhop import *
 
+import os
+
 import view.mainwindow as mainwindow
 import view.statebrowserwindow as statebrowserwindow
 import view.taskwindow as taskwindow
+from pyhop_module.pyhop import *
 
-import os
 
 class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def __init__(self, parent=None):

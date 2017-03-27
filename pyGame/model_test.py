@@ -2,7 +2,7 @@
 from __future__ import print_function
 from model.plan_tree import *
 from validation_module.validator import *
-import blocks_world_operators
+ import blocks_world_operators
 import blocks_world_methods
 import blocks_world_methods2
 from pyhop_module.pyhop import *
