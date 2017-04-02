@@ -1,4 +1,4 @@
-﻿"""
+"""
 Changes made by Team 7
 Assossiated with WSU
 Edited by Calvin McClory 3/21/2017
@@ -101,7 +101,7 @@ Pyhop provides the following classes and functions:
 
 from __future__ import print_function
 import copy,sys, pprint
-from preconditions_module import preconditions
+from preconditions_module.preconditions import *
 
 ############################################################
 # States and goals

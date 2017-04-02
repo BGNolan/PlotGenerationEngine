@@ -73,7 +73,7 @@ class Plan_Tree():
         if parent is not None:
             #Set parent to the parent of the new task node
             new_task_node.__parent = parent
-            print("Parent:" + ', '.join(new_task_node.__parent.task))
+           #print("Parent:" + ', '.join(new_task_node.__parent.task))
             # add the child node to the parents child list
             parent.add_child(new_task_node)
 
@@ -89,7 +89,7 @@ class Plan_Tree():
 
     def display_all(self):
         nodes_printed =0
-    #    print("Display Muther Fuckin Tree!!")
+    #    print("Display All the nodes in the tree with its respective parent!!")
         #Print the root node
         print ("ROOT NODE: " + ', ' .join(self.__root.task) + " Count: " + str(self.__root.__count))
         nodes_printed +=1
@@ -114,7 +114,7 @@ class Plan_Tree():
         plan = []
         # if the node has no parents just return that singular task
         if node.__parent is None:
-            print('Here!!')
+            #print('Here!!')
             plan.append(node.task)
             return plan
         #if parents of the node do exist
