@@ -7,9 +7,7 @@ from pyhop_module.blocks_world_methods2 import *
 from preconditions_module.t7_pyhop_v1 import *
 from model.plan_tree import *
 
-import view.mainwindow as mainwindow
-import view.statebrowserwindow as statebrowserwindow
-import view.taskwindow as taskwindow
+from view import mainwindow, statebrowserwindow, taskwindow, editorwindow
 
 import os
 
@@ -22,9 +20,12 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
         self.stateBrowserWindow = None
         self.taskWindow = None
+        self.editorWindow = None
+
         self.actionOpen.triggered.connect(self.browseFolder)
         self.actionState_Browser.triggered.connect(self.showStateBrowser)
         self.actionPlanner.triggered.connect(self.hideStateBrowser)
+        self.actionEditor.triggered.connect(self.showEditor)
         self.pushButton_2.clicked.connect(self.showStateBrowser)
         self.pushButton_3.clicked.connect(self.showStateBrowser)
         self.pushButton.clicked.connect( lambda: self.showTaskWindow('pickup') )
@@ -36,6 +37,11 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.openedFile = file_name
         relativeName = self.currentp.relativeFilePath(self.openedFile)
         self.setWindowTitle(relativeName)
+
+    def showEditor(self):
+        if self.editorWindow is None:
+            self.editorWindow = editorwindow.EditorWindow(self)
+        self.editorWindow.show()
 
 
     def showStateBrowser(self):
