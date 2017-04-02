@@ -14,6 +14,8 @@ import view.taskwindow as taskwindow
 import os
 
 class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
+    openedFile = None
+    currentp = QtCore.QDir.current()
     def __init__(self, parent=None):
         super(PlotGenerationEngine, self).__init__(parent)
         self.setupUi(self)
@@ -31,14 +33,20 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
     def browseFolder(self):
         #self.listWidget.clear()
         file_name = str(QtWidgets.QFileDialog.getOpenFileName(self)[0])
-
-        currentp = QtCore.QDir.current()
-        relativeName = currentp.relativeFilePath(file_name)
+        self.openedFile = file_name
+        relativeName = self.currentp.relativeFilePath(self.openedFile)
         self.setWindowTitle(relativeName)
+
 
     def showStateBrowser(self):
         if self.stateBrowserWindow is None:
             self.stateBrowserWindow = statebrowserwindow.StateBrowserWindow(self)
+            if self.openedFile is not None:
+                self.stateBrowserWindow.listWidget.clear()
+                self.stateBrowserWindow.listWidget.addItem(self.currentp.relativeFilePath(self.openedFile))
+            else:
+                self.stateBrowserWindow.listWidget.clear()
+                self.stateBrowserWindow.listWidget.addItem("No opened file")
         self.stateBrowserWindow.show()
 
     def hideStateBrowser(self):
@@ -68,17 +76,6 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
 
 def main():
-    #Inital State
-    state1 = State('state1')
-    state1.pos={'a':'b', 'b':'table', 'c':'table'}
-    state1.clear={'c':True, 'b':False,'a':True}
-    state1.holding=False
-
-    #Goal State
-    goal_state = Goal('goal1a')
-    goal_state.pos={'c':'b', 'b':'a', 'a':'table'}
-    goal_state.clear={'c':True, 'b':False, 'a':False}
-    goal_state.holding=False
 
     # [('unstack', 'a', 'b'), ('putdown', 'a'), ('pickup', 'b'), ('stack', 'b', 'a'), ('pickup', 'c'), ('stack', 'c', 'b')]
     #['unstack', 'pickup', 'putdown', 'stack']

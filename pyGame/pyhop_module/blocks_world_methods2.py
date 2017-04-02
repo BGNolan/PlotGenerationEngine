@@ -6,7 +6,6 @@ backtracking. The only purpose for doing this is to illustrate
 like at different verbosity levels.
 -- Dana Nau <nau@cs.umd.edu>, 2012.05.31.
 """
-
 #from preconditions_module.t7_pyhop_v1 import *
 #import preconditions_module.t7_pyhop_v1 as pyhop
 import pyhop_module.pyhop as pyhop

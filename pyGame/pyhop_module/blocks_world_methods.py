@@ -4,6 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
+
 #from preconditions_module.t7_pyhop_v1 import *
 import preconditions_module.t7_pyhop_v1 as pyhop
 import pyhop_module.pyhop as pyhop

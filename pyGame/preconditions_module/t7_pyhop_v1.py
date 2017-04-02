@@ -1,4 +1,4 @@
-﻿"""
+"""
 Changes made by Team 7
 Assossiated with WSU
 Edited by Calvin McClory 3/21/2017
