@@ -1,10 +1,7 @@
 """
-A modified version of blocks_world_methods.py in which the method
-for 'get' is replaced with two methods that will sometimes cause
-backtracking. The only purpose for doing this is to illustrate
-(in the blocks_world_examples.py file) what backtracking looks
-like at different verbosity levels.
--- Dana Nau <nau@cs.umd.edu>, 2012.05.31.
+Blocks World methods for Pyhop 1.1.
+Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
+This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
 #from preconditions_module.t7_pyhop_v1 import *
@@ -88,36 +85,19 @@ pyhop.declare_methods('move_one', move1)
 
 ### methods for "get"
 
-def get_by_unstack(state,b1):
-    """Generate a pickup subtask."""
-    if state.clear[b1]: return [('unstack_task',b1)]
-    return False
+def get_m(state,b1):
+    """
+    Generate either a pickup or an unstack subtask for b1.
+    """
+    if state.clear[b1]:
+        if state.pos[b1] == 'table':
+                return [('pickup',b1)]
+        else:
+                return [('unstack',b1,state.pos[b1])]
+    else:
+        return False
 
-def get_by_pickup(state,b1):
-    """Generate a pickup subtask."""
-    if state.clear[b1]: return [('pickup_task',b1)]
-    return False
-
-pyhop.declare_methods('get', get_by_pickup, get_by_unstack)
-
-### methods for "pickup_task"
-
-def pickup_m(state,b1):
-    """Generate a pickup subtask."""
-    if state.clear[b1]: return [('pickup',b1)]
-    return False
-
-pyhop.declare_methods('pickup_task', pickup_m)
-
-
-### methods for "unstack_task"
-
-def unstack_m(state,b1):
-    """Generate a pickup subtask."""
-    if state.clear[b1]: return [('unstack',b1,state.pos[b1])]
-    return False
-
-pyhop.declare_methods('unstack_task', unstack_m)
+pyhop.declare_methods('get', get_m)
 
 
 ### methods for "put"
