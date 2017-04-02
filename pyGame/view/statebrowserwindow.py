@@ -1,8 +1,8 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 import sys
 
-import mainwindow
-import statebrowser
+from view import mainwindow
+from view import statebrowser
 
 import os
 

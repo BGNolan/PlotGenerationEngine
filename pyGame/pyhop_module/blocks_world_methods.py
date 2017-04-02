@@ -4,7 +4,7 @@ Author: Dana Nau <nau@cs.umd.edu>, November 15, 2012
 This file should work correctly in both Python 2.7 and Python 3.2.
 """
 
-import pyhop
+from pyhop_module import pyhop
 
 """
 Here are some helper functions that are used in the methods' preconditions.

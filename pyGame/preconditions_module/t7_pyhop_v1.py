@@ -101,7 +101,7 @@ Pyhop provides the following classes and functions:
 
 from __future__ import print_function
 import copy,sys, pprint
-import preconditions
+from preconditions_module import preconditions
 
 ############################################################
 # States and goals

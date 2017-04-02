@@ -7,7 +7,7 @@ like at different verbosity levels.
 -- Dana Nau <nau@cs.umd.edu>, 2012.05.31.
 """
 
-import pyhop
+from pyhop_module import pyhop
 
 """
 Here are some helper functions that are used in the methods' preconditions.

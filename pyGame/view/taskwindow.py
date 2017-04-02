@@ -1,10 +1,11 @@
 from PyQt5 import QtGui, QtCore, QtWidgets
 import sys
+print(sys.path)
 
 import preconditions_v2 as pc
 
-import mainwindow
-import dialog
+from view import mainwindow
+from view import dialog
 
 import os
 
@@ -16,6 +17,7 @@ class TaskWindow(QtWidgets.QMainWindow, dialog.Ui_Dialog):
     def task(self, value):
         self._task = value
         self.listWidget.clear()
+        self.listWidget_2.clear()
         self.label.setText(value)
         self.listWidget_2.addItem("- Preconditions:")
         for precondition in pc.preconditionsForTasks[value]:
