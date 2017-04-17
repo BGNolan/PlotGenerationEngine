@@ -4,7 +4,7 @@ An application that implements a modified version of pyhop to allow for user fri
 
 ## Getting Started
 
-Simply use your favourite python3 interpreter to run Main.py
+Simply use your favourite python3 interpreter to run pyGame/main.py.
 
 ### Prerequisites
 
@@ -17,7 +17,7 @@ Requires PyQt5 and Python 3.5 and later. To install PyQt5 on a Windows, OS X, an
 
 ## Versioning
 
-We used github for all version control 
+We used github for all version control.
 
 ## Authors
 
