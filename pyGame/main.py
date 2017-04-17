@@ -12,8 +12,10 @@ from view import mainwindow, statebrowserwindow, taskwindow, editorwindow, plann
 import os
 
 class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
+    #The main window
     openedFile = None
     currentp = QtCore.QDir.current()
+    #Creates either a blank tree or a predifined tree used for testing purposes.
     def __init__(self, parent=None):
         super(PlotGenerationEngine, self).__init__(parent)
         self.setupUi(self)
@@ -22,6 +24,7 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.taskWindow = None
         self.editorWindow = None
 
+        #The following 8 lines exists to populate the tree for testing purposes
         #ellipse = QtWidgets.QGraphicsEllipseItem(20,20,100,200)
         pen = QtGui.QPen(QtGui.QColor("black"))
         brush = QtGui.QBrush(QtGui.QColor(100,100,255,100))
@@ -31,13 +34,13 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
 
         self.scene=QtWidgets.QGraphicsScene(self)
-        #self.scene.addText("Hello, world!")
         self.scene.addItem(rect)
         rect.setFlags(QtWidgets.QGraphicsItem.ItemIsMovable)
         self.view = plannerView.PlannerView(self.scene, self.leftCol)
         self.view.setMinimumSize(510,490)
         self.leftCol.show()
 
+        #The following 8 lines exists to populate the tree for testing purposes
         self.actionOpen.triggered.connect(self.browseFolder)
         self.actionState_Browser.triggered.connect(self.showStateBrowser)
         self.actionPlanner.triggered.connect(self.hideStateBrowser)
@@ -48,6 +51,7 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.populateTasks()
 
     def browseFolder(self):
+        #The action handled for File->Open
         #self.listWidget.clear()
         file_name = str(QtWidgets.QFileDialog.getOpenFileName(self)[0])
         self.openedFile = file_name
@@ -55,12 +59,14 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.setWindowTitle(relativeName)
 
     def showEditor(self):
+        #The window to edit the pyhop file's current lists of tasks goal state, initial state, etc.
         if self.editorWindow is None:
             self.editorWindow = editorwindow.EditorWindow(self)
         self.editorWindow.show()
 
 
     def showStateBrowser(self):
+        #The window to show current set of tasks
         if self.stateBrowserWindow is None:
             self.stateBrowserWindow = statebrowserwindow.StateBrowserWindow(self)
             if self.openedFile is not None:
@@ -72,10 +78,12 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.stateBrowserWindow.show()
 
     def hideStateBrowser(self):
+        #Toggles
         if self.stateBrowserWindow is not None:
             self.stateBrowserWindow.hide()
 
     def showTaskWindow(self, task):
+        #The window that appears when clicking on a task in the main window
         if self.taskWindow is None:
             self.taskWindow = taskwindow.TaskWindow(self)
 
@@ -83,6 +91,7 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.taskWindow.show()
 
     def populateTasks(self):
+        #Populates the task section in the main window
         tasks = get_operators()
         layout = QtWidgets.QGridLayout(self.tasksList)
         row = 0
@@ -99,10 +108,12 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
+    #Creates the main window on start up
     # [('unstack', 'a', 'b'), ('putdown', 'a'), ('pickup', 'b'), ('stack', 'b', 'a'), ('pickup', 'c'), ('stack', 'c', 'b')]
     #['unstack', 'pickup', 'putdown', 'stack']
     #Plan
 
+    #The Following 11 lines of code is console output for test purposes
     test_tree = Plan_Tree()
     test_tree.add_task(('unstack', 'a', 'b'))
     test_tree.add_task(('putdown', 'a'),test_tree.root)
