@@ -7,7 +7,7 @@ from pyhop_module.blocks_world_methods2 import *
 from preconditions_module.t7_pyhop_v1 import *
 from model.plan_tree import *
 
-from view import mainwindow, statebrowserwindow, taskwindow, editorwindow
+from view import mainwindow, statebrowserwindow, taskwindow, editorwindow, plannerView, dragButton
 
 import os
 
@@ -22,13 +22,29 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         self.taskWindow = None
         self.editorWindow = None
 
+        #ellipse = QtWidgets.QGraphicsEllipseItem(20,20,100,200)
+        pen = QtGui.QPen(QtGui.QColor("black"))
+        brush = QtGui.QBrush(QtGui.QColor(100,100,255,100))
+        rect = QtWidgets.QGraphicsRectItem(20,20,80,30)
+        rect.setBrush(brush)
+        rect.setPen(pen)
+
+
+        self.scene=QtWidgets.QGraphicsScene(self)
+        #self.scene.addText("Hello, world!")
+        self.scene.addItem(rect)
+        rect.setFlags(QtWidgets.QGraphicsItem.ItemIsMovable)
+        self.view = plannerView.PlannerView(self.scene, self.leftCol)
+        self.view.setMinimumSize(510,490)
+        self.leftCol.show()
+
         self.actionOpen.triggered.connect(self.browseFolder)
         self.actionState_Browser.triggered.connect(self.showStateBrowser)
         self.actionPlanner.triggered.connect(self.hideStateBrowser)
         self.actionEditor.triggered.connect(self.showEditor)
-        self.pushButton_2.clicked.connect(self.showStateBrowser)
-        self.pushButton_3.clicked.connect(self.showStateBrowser)
-        self.pushButton.clicked.connect( lambda: self.showTaskWindow('pickup') )
+#        self.pushButton_2.clicked.connect(self.showStateBrowser)
+#        self.pushButton_3.clicked.connect(self.showStateBrowser)
+#        self.pushButton.clicked.connect( lambda: self.showTaskWindow('pickup') )
         self.populateTasks()
 
     def browseFolder(self):
@@ -72,17 +88,17 @@ class PlotGenerationEngine(QtWidgets.QMainWindow, mainwindow.Ui_MainWindow):
         row = 0
         col = 0
         for taskName in tasks:
-                layout.addWidget(QtWidgets.QPushButton(taskName),row,col)
+                layout.addWidget(dragButton.DragButton(taskName),row,col)
                 if col < 2:
                     col += 1
                 else:
                     col = 0
                     row += 1
-        self.scrollAreaWidgetContents.setLayout(layout)
+        self.tasksList.setLayout(layout)
 
 
 def main():
-
+    app = QtWidgets.QApplication(sys.argv)
     # [('unstack', 'a', 'b'), ('putdown', 'a'), ('pickup', 'b'), ('stack', 'b', 'a'), ('pickup', 'c'), ('stack', 'c', 'b')]
     #['unstack', 'pickup', 'putdown', 'stack']
     #Plan
@@ -99,7 +115,7 @@ def main():
     for task in plan:
         print('Task: '+ ', '.join(task))
 
-    app = QtWidgets.QApplication(sys.argv)
+
     form = PlotGenerationEngine()
     form.show()
     app.exec_()
