@@ -20,6 +20,7 @@ state1 = State('state1')
 state1.pos={'a':'b', 'b':'table', 'c':'table'}
 state1.clear={'c':True, 'b':False,'a':True}
 state1.holding=False
+state1.pinapplepen = {'pen':'apple','pinapple':'pen'}
 
 #Goal State
 goal_state = Goal('goal1a')
@@ -39,8 +40,13 @@ goal_state.holding=False
 test_tree = Plan_Tree()
 test_tree.add_task(('unstack', 'a', 'b'))
 test_tree.add_task(('putdown', 'a'), test_tree.root)
+test_tree.display_all()
 test_tree.add_task(('pickup', 'b'), test_tree.nodes[2])
 test_tree.add_task(('stack', 'b', 'a'), test_tree.nodes[3])
+test_tree.add_task(('stack', 'b', 'a'), test_tree.nodes[4])
+test_tree.add_task(('stack', 'b', 'a'), test_tree.nodes[4])
+test_tree.add_task(('stack', 'b', 'a'), test_tree.nodes[5])
+
 print('')
 print("-----Display the tree-----")
 test_tree.display_all()
@@ -77,5 +83,10 @@ plan2 = validator_copy.run_pyhop(node)
 print('')
 print("------This is the plan generated from the copy read back in from the json file------")
 print(plan2)
+
+print("------GET THE DEPTH COUNT FOR THE TREE---------")
+width =test_tree.get_subtree_width(test_tree.root)
+print("WIDTH:")
+print(width)
 #Print test state
 #print_state(state1)
