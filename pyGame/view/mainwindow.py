@@ -5,8 +5,10 @@
 # Created by: PyQt5 UI code generator 5.8.1
 #
 # WARNING! All changes made in this file will be lost!
-
+from view import dragWidget
 from PyQt5 import QtCore, QtGui, QtWidgets
+
+
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
@@ -40,15 +42,15 @@ class Ui_MainWindow(object):
         self.leftCol.setFrameShape(QtWidgets.QFrame.StyledPanel)
         self.leftCol.setFrameShadow(QtWidgets.QFrame.Raised)
         self.leftCol.setObjectName("leftCol")
-        self.pushButton = QtWidgets.QPushButton(self.leftCol)
-        self.pushButton.setGeometry(QtCore.QRect(190, 100, 121, 81))
-        self.pushButton.setObjectName("pushButton")
-        self.pushButton_2 = QtWidgets.QPushButton(self.leftCol)
-        self.pushButton_2.setGeometry(QtCore.QRect(190, 30, 113, 32))
-        self.pushButton_2.setObjectName("pushButton_2")
-        self.pushButton_3 = QtWidgets.QPushButton(self.leftCol)
-        self.pushButton_3.setGeometry(QtCore.QRect(190, 410, 113, 32))
-        self.pushButton_3.setObjectName("pushButton_3")
+#        self.pushButton = QtWidgets.QPushButton(self.leftCol)
+#        self.pushButton.setGeometry(QtCore.QRect(190, 100, 121, 81))
+#        self.pushButton.setObjectName("pushButton")
+#        self.pushButton_2 = QtWidgets.QPushButton(self.leftCol)
+#        self.pushButton_2.setGeometry(QtCore.QRect(190, 30, 113, 32))
+#        self.pushButton_2.setObjectName("pushButton_2")
+#        self.pushButton_3 = QtWidgets.QPushButton(self.leftCol)
+#        self.pushButton_3.setGeometry(QtCore.QRect(190, 410, 113, 32))
+#        self.pushButton_3.setObjectName("pushButton_3")
         self.rightCol = QtWidgets.QFrame(self.mainFrame)
         self.rightCol.setGeometry(QtCore.QRect(500, 0, 321, 451))
         self.rightCol.setFrameShape(QtWidgets.QFrame.StyledPanel)
@@ -95,7 +97,8 @@ class Ui_MainWindow(object):
         self.tasksLabel.setGeometry(QtCore.QRect(0, 0, 331, 16))
         self.tasksLabel.setAlignment(QtCore.Qt.AlignCenter)
         self.tasksLabel.setObjectName("tasksLabel")
-        self.tasksList = QtWidgets.QScrollArea(self.bottomRight)
+        self.tasksList = dragWidget.DragWidget(self.bottomRight)
+        #self.tasksList = QtWidgets.QScrollArea(self.bottomRight)
         self.tasksList.setGeometry(QtCore.QRect(0, 20, 331, 241))
         self.tasksList.setVerticalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
         self.tasksList.setHorizontalScrollBarPolicy(QtCore.Qt.ScrollBarAlwaysOn)
@@ -158,9 +161,9 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.pushButton.setText(_translate("MainWindow", "Task A"))
-        self.pushButton_2.setText(_translate("MainWindow", "InitialState"))
-        self.pushButton_3.setText(_translate("MainWindow", "Goal State"))
+#        self.pushButton.setText(_translate("MainWindow", "Task A"))
+#        self.pushButton_2.setText(_translate("MainWindow", "InitialState"))
+#        self.pushButton_3.setText(_translate("MainWindow", "Goal State"))
         self.worldItemsLabel.setText(_translate("MainWindow", "World Items"))
         self.treeWidget.headerItem().setText(0, _translate("MainWindow", "Blocks"))
         __sortingEnabled = self.treeWidget.isSortingEnabled()
