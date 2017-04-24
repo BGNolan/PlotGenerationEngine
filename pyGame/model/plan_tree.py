@@ -2,8 +2,20 @@
 #generation engine. This structure is a general tree
 
 #Class :  Task_Node
-#This class creates the object that holds each task
-
+#This class creates the object that holds each task. You create each node object by passing it the task value held in
+#that nodde
+#In each node object it holds the following values
+#Value: tesk = List that holds the task set to that node
+#Value: parent = holds a reference to the parent node of the current node
+#Value: children = A list that hold references to all the children if this node
+#Value: count = int value that is the unique indentifer of this node, this values never changes and is set by the plan tree
+#               object the node is stored in
+#Value: depth = a reference to which level the of the tree the node is stored in, this value is set by the plane, tree
+#               and is based off of the parent depth the node is set as the child of
+# REMARK; The following are values that are to be used with the GUI, this is part of partial feature and we are not sure if this is
+# the correct place to put these values
+#Value: x = hold the x coordinate box for drawing in the GUI
+#Value y = homy the y coordinate box for drawing the GUI
 class Task_Node():
 
     def __init__(self,task):
@@ -18,8 +30,18 @@ class Task_Node():
     def add_child(self,child_node):
         self.children.append(child_node)
 
-
- #This class hold all the functionality for building the Plan tree
+#Class : Plan_Tree
+#Descrption: This class hold all the functionality for building the Plan tree. The Plan Tree data structure is a general
+#tree.
+#value : nodes =  list of all the node object in the tree
+#value : root =  reference to the node object in the tree that is the root of the tree
+#value : node_count = the number of nodes created in this tree, this is used as the unique idemtifier for each node,
+#        this value should be incremented every time a new node object is created
+#value : max_depth = hold the depth value of the tree
+#REMARK - the following values have to due with the partially implemented GUI feature, not sure if this is the permanent
+#location for these values or if they may be moved somewhere else in the future
+#value : x_max = holds the max width of the GUI
+#value : y_max = holds the max height of the GUI
 class Plan_Tree():
 
     def __init__(self):
@@ -30,15 +52,17 @@ class Plan_Tree():
         self.max_depth = 0
         self.x_max = 500
         self.y_max = 500
-
+    #Method: get_node - pass in the unqiue identifer for the node in nodes and it will return which node you requested
+    # returns the node object request based on the unique identifer called count
     def get_node(self,count):
         return self.nodes[count]
-    #This function adds a task to the node
+
+    #Method: add_task - This function adds a task to the node
+    #param : task - the task itself being passed to the node, ex. ('stack', 'b', 'a')
+    #param : parent - if parent exists pass a refernce to parent object to the function
     #using a dictionary and a int value count to avoid collisions
-    #Hooefully this makes it really fast
     def add_task(self,task,parent = None):
         self.node_count += 1
-        #print("Current Count: "+str(self.__count))
         #Create new node object
         new_task_node = Task_Node(task)
         #set node index value to count of the tree
@@ -47,7 +71,6 @@ class Plan_Tree():
         if parent is not None:
             #Set parent to the parent of the new task node
             new_task_node.parent = parent
-           #print("Parent:" + ', '.join(new_task_node.__parent.task))
             # add the child node to the parents child list
             parent.add_child(new_task_node)
             #give child correct depth
@@ -61,13 +84,16 @@ class Plan_Tree():
 
         #Add node to dictionary
         self.nodes[self.node_count] = new_task_node
-
+        #Return text on success
         return "Task Added!"
 
-
+    #Method : display_all - print out all nodes in preorder depth first fashion
+    #root has a special print out then the rest of the nodes are printed out in the following fashion
+    # Task: ... Parent: ... Count: ....
     def display_all(self):
+        #count the number of nodes printed
         nodes_printed =0
-    #    print("Display All the nodes in the tree with its respective parent!!")
+
         #Print the root node
         print ("ROOT NODE: " + ', ' .join(self.root.task) + " Count: " + str(self.root.count))
         nodes_printed +=1
@@ -76,7 +102,8 @@ class Plan_Tree():
         if bool(self.root.children) != False:
             self.display_children(self.root)
 
-
+    #Mothod: display_children - helper function used to help display_all, used to recurisvly call printing the children
+    # and the children of those children
     def display_children(self, current_node):
         #Go through child array printing all children if they exist
         for child in current_node.children:
@@ -86,7 +113,9 @@ class Plan_Tree():
                 self.display_children(child)
 
 
-    #returns a list of plans
+    #Methos: get_plan - based on the node input to the function the function call all the from the selected node to the root
+    # of the tree and then combines all the tasks from the root node to the node input into the function to generate a plane
+    #value : node -  reference to the node object you want to generate a plan to
     def get_plan(self,node):
         #Create a empty list called plan
         plan = []
@@ -102,15 +131,25 @@ class Plan_Tree():
             plan.append(node.task)
             return plan
 
+    #Method : get_parent_task - helper function to support recursive call to root from the selected node in get_plan,
+    #param : node - the node being checked for a parent and append its task to the plan
+    #param : plan - the plan passed to each function to continue building the plan
     def get_parent_task(self, node, plan):
+        #get the plan of the parent if not non
         if node is not None:
+            #if we are not at root get the next parent until root is reached
             if node.count != self.root.count:
+                #call the next parent recursively
                 plan = self.get_parent_task(node.parent,plan)
             plan.append(node.task)
+        #return the plan
         return plan
 
+#NOTE - The functionality beyond this point was for an incomplete feature, it is up to whoever takes this if they want to
+# continue it or not
 
-   #Retunrs a count of nodes available at a given depth level designated by the variable level
+    #Method : get_depth_count - Returns a count of nodes available at a given depth level designated by the variable level
+    #param : level - the depth you want to count the number of nodes at
     def get_depth_count(self,level):
         count = 0
         for node in self.nodes:
@@ -119,6 +158,8 @@ class Plan_Tree():
 
         return count
 
+    #Method get_subtree_width- finds the max width of each subtree so we know how to space the nodes for the GUI
+    #param : subroot - the root for each subtree
     def get_subtree_width(self,subRoot):
         #Max Width is always one becuase of root node
         max_width = 1
@@ -145,6 +186,7 @@ class Plan_Tree():
 
         # return the max width
         return max_width
+
     def get_subtree_width_helper(self,currentNode,depth_count,depth):
         # get depth for rest of levels
         if len(currentNode.children) > 0:

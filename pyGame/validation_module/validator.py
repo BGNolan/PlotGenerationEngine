@@ -25,7 +25,7 @@ class Validator:
         self.user_plan = user_plan
         self.pyhop_plan = ""
 
-    # this is the method called to execute pyhop and returns the plan, BOOYAH!!
+    # this is the method called to execute pyhop and returns the plan,
     def run_pyhop(self,node):
         """Produces and returns a plan using pyhop"""
         # print(self.user_plan)
