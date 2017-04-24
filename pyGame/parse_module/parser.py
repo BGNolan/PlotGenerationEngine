@@ -2,7 +2,15 @@ import jsonpickle
 
 
 class Parser:
-    """Contains methods for storing and loading objects to and from JSON files"""
+    """This class is used to save and load user plans and any other user data
+    that needs to be maintained between runs.
+
+    The dump_to_file method may be used the write the contents of any python
+    object to a JSON file.
+
+    The read_file method may be used to read in and reconstruct any object
+    that was saved to a JSON file using the dump_to_file method.
+    """
 
     file_path = ""
 
@@ -10,7 +18,7 @@ class Parser:
         """Save an object to a JSON file of the provided name
 
         NOTE: The file path should be set before calling this method.
-        NOTE 2: As of the current implementation (3/24/17) existing
+        NOTE 2: As of the current implementation (4/23/17) existing
         files are overwritten without warning.
 
         :param Object object: the object to be saved
@@ -33,4 +41,4 @@ class Parser:
         jp_object = f.read()                        # Read encoded object from file
         f.close()                                   # Close file
         object = jsonpickle.decode(jp_object)       # Decode file back to its original object
-        return object
+        return object                               # Return the reconstructed object
