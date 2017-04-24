@@ -4,11 +4,13 @@ An application that implements a modified version of pyhop to allow for user fri
 
 ## Getting Started
 
-Simply use your favourite python3 interpreter to run pyGame/main.py.
+UI: Simply use your preferred python3 interpreter to run pyGame/main.py.
+Parser: An example of how the parser operates is given with parser_testing.py
 
 ### Prerequisites
 
-Requires PyQt5 and Python 3.5 or later. To install PyQt5 on a Windows, OS X, and/or 64-bit Linux machine, in the command line enter 'pip3 install PyQt5' without the quotes.
+UI: Requires PyQt5 and Python 3.5 or later. To install PyQt5 on a Windows, OS X, and/or 64-bit Linux machine, in the command line enter 'pip3 install PyQt5' without the quotes.
+Parser: Requires Python3 and the library jsonpickle. To install jsonpickle, use the command "pip install -U jsonpickle"
 
 ## Built With
 
@@ -27,6 +29,15 @@ We used github for all version control.
 * **ryannichols**
 * **murdrad**
 
+## To-Do
+
+List of all intended features left to implement:
+
+* Complete integration between UI and Parser
+* Implementation of editing files via the parser
+* Drag and drop in the UI between tasks and current plan
+* Opening a file
+* Saving a file
 
 ## Acknowledgments
 
